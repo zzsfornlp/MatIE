@@ -28,7 +28,7 @@ We utilize our own json (JSON Lines) data format, and we also provide a script t
 
 The other direction is also available:
 
-    python3 -m mspx.tools.al.utils_brat cmd:b2z input_path:${INPUT_FILE} output_path:${OUTPUT_DIR}/ delete_nils:1
+    python3 -m mspx.tools.al.utils_brat cmd:z2b input_path:${INPUT_FILE} output_path:${OUTPUT_DIR}/ delete_nils:1
 
 ### Obtain MatBERT
 
@@ -59,7 +59,13 @@ Finally, we can train and test an IE (entity+relation) model, assuming we have t
 
 We can also perform predictions with a trained model (assuming training dir is `${MODEL_DIR}`) (from `${INPUT_DATA}` to `${OUTPUT_DATA}`):
 
-    python3 -m mspx.tasks.zrel.main ${MODEL_DIR}/_conf model_load_name:${MODEL_DIR}/zmodel.best.m vocab_load_dir:__vpack_mat/ log_stderr:1 fs:test test1.group_files: test0.test_streaming:5 test0.group_files:${INPUT_DATA} test0.output_file:${OUTPUT_DATA}
+    python3 -m mspx.tasks.zrel.main ${MODEL_DIR}/_conf model_load_name:${MODEL_DIR}/zmodel.best.m vocab_load_dir:__vpack_mat/ log_stderr:1 fs:test d_input_dir: test1.group_files: test0.test_streaming:5 test0.group_files:${INPUT_DATA} test0.output_file:${OUTPUT_DATA}
+
+### Easier Decoding
+
+We also provide a script `decode.sh` for easier decoding that takes a directory of "*.txt" files as input and produces BRAT's "*.ann" annotations to an output directory. To use this script, we need to provide a model dir `${MODEL_DIR}` and a vocab dir `${VOCAB_DIR}`. Also prepare a `matbert-base-cased` dir (that contains the matbert files) at the current working directory. See previous sections on how to prepare them. With all of these prepared, we can run the decoding script (input from `${INPUT_DIR}` and output to `${OUTPUT_DIR}`):
+
+    CUDA_VISIBLE_DEVICES=<YourGpuID> MODEL_DIR=$MODEL_DIR VOCAB_DIR=$VOCAB_DIR INPUT_DIR=$INPUT_DIR OUTPUT_DIR=$OUTPUT_DIR EXTRA_ARGS= bash decode.sh
 
 ### Import Data into MongoDB for easier querying
 

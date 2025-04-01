@@ -2,6 +2,13 @@
 
 This is a simple Information Extraction (IE) system for Material Science text analysis (Entity Extraction + Relation Extraction).
 
+### DATA
+
+We provide our data (in BRAT format) in the file `data.zip`, where there are three sub-folders:
+- am corresponds to Domain I (as discussed in Section 4)
+- uq0 corresponds to Domain II without active learning (Section 5)
+- uq1 corresponds to Domain II with active learning (Section 5)
+
 ### Setup
 
 Clone this repo:
